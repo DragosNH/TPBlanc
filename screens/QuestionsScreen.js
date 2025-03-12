@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import { StyleSheet } from "react-native";
+import RadioGroup from 'react-native-radio-buttons-group';
 
 export default QuestionSrceen = ({ navigation }) => {
+
+    const radioButtons = useMemo(() => ([
+        {
+            id: '1',
+            label: 'Paris',
+            value: 'Paris'
+        },
+        {
+            id: '2',
+            label: 'Lyon',
+            value: 'Lyon'
+        },
+        {
+            id: '3',
+            label: 'Marseille',
+            value: 'Marseille'
+        },
+        {
+            id: '4',
+            label: 'Bordeaux',
+            value: 'Bordeaux'
+        },
+    ]), []);
+
+    const [selectedId, setSelectedId] = useState();
+
     return (
         <View style={styles.container}>
             <View style={styles.topScreen}>
@@ -12,7 +39,16 @@ export default QuestionSrceen = ({ navigation }) => {
                     <Text>Score</Text>
                 </View>
             </View>
+            <View style={styles.radioContainer}>
+                <Text style={styles.question}>Quelle est la capitale de la France?</Text>
+                <RadioGroup 
+                    containerStyle={styles.radioGrp}
+                    radioButtons={radioButtons}
+                    onPress={setSelectedId}
+                    selectedId={selectedId}
+                />
 
+            </View>
             <TouchableOpacity style={styles.btn}
                 onPress={() => navigation.navigate('Question')}
             >
@@ -45,9 +81,25 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
 
-    scoreRow:{
+    scoreRow: {
         flexDirection: 'row',
         justifyContent: 'space-around'
+    },
+
+    question:{
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    radioContainer:{
+        width: "100%",
+        alignItems: "center",
+    },
+
+    radioGrp:{
+        width: "100%", 
+        alignItems: "stretch",
+        marginStart: 180
     },
 
     txtBtn: {
@@ -61,7 +113,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        marginBottom: 150,
+        marginBottom: 100,
 
     }
 })
