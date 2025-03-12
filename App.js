@@ -3,10 +3,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import QuestionsScreen from './screens/QuestionsScreen';
 import ScoreScreen from './screens/ScoreScreen';
+import { useEffect, useState } from 'react';
+import { ScoreDatabase } from './components/db';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+      const [db] = useState(new ScoreDatabase());
+  
+      useEffect(() => {
+          db.DBInit();
+      }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator>

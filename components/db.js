@@ -1,31 +1,40 @@
-import { enablePromise, openDatabase } from "react-native-sqlite-storage"
+import * as SQLite from 'expo-sqlite';
 
-enablePromise(true);
 
-export const connectToDatabase = async () => {
-    return openDatabase(
-        { name: "score.db", location: "default" },
-        () => {},
-        (e) => {
-            console.log(e)
-            throw Error("Connection failed")
-        }
-    )
-}
-
-export const createTables = async => {
-    const userInfo = `
-        CREATE TABLE IF NOT EXISTS  UserPreference (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            score INT
-        )
-    `
-
-    try {
-        db.executeSql(userInfo)
-    } catch (e) {
-        console.error(e)
-        throw Error(`Failed to create the table`)
+export class ScoreDatabase {
+    DB_NAME = 'quiz.db';
+  
+    DBInit = async () => {
+      const db = await SQLite.openDatabaseAsync(this.DB_NAME);
+      await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS scores (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          userName TEXT NOT NULL,
+          score INTEGER NOT NULL,
+        );`);
     }
-}
+  
+    addScore = async (score) => {
+    try {
+      const db = await SQLite.openDatabaseAsync(this.DB_NAME);
+      await db.runAsync(
+        'INSERT INTO scores (userName, score) VALUES (?, ?);',
+        [score.userName, score.score]
+      );
+      return true; 
+    } catch (error) {
+      console.error("Erreur lors de l'ajout du score:", error);
+      return false; 
+    }
+  };
+  
+    getScores = async () => {
+    try {
+      const db = await SQLite.openDatabaseAsync(this.DB_NAME);
+      return await db.getAllAsync('SELECT * FROM scores ORDER BY score DESC;');
+    } catch (error) {
+      console.error("Erreur lors de la récupération des scores:", error);
+      return []; 
+    }
+  };
+  }

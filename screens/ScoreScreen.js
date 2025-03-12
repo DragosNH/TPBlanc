@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
+import ScoreDatabase from "../components/db"
 
 export default ScoreScreen = ({ navigation }) => {
     return (

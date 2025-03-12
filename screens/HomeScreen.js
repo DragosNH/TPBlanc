@@ -1,23 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import { StyleSheet } from "react-native";
-import { connectToDatabase, createTables } from "../components/db";
 
-const localData = useCallback(async() => {
-    try{
-        const db = await connectToDatabase();
-        createTables(db);
-    } catch (e) {
-        console.error(e);
-    }
-}, []);
 
-useEffect(() => {
-    loadData()
-}, [loadData])
 
 export default HomeScreen = ({ navigation }) => {
+
+
     const [name, onChangeName] = useState('');
+
+    const handleStartQuiz = () => {
+        if (name.trim()) {
+            navigation.navigate('Question', {userName: name})
+        } else {
+            alert("Veuillez entrer votre prénom avant de commencer.");
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -31,8 +29,8 @@ export default HomeScreen = ({ navigation }) => {
                     style={styles.input}
                 />
             </View>
-            <TouchableOpacity style={styles.btn} 
-                onPress={() => navigation.navigate('Question')}
+            <TouchableOpacity style={styles.btn}
+                onPress={handleStartQuiz}
             >
                 <Text style={styles.txtBtn}>
                     Valider
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 
-    title:{
+    title: {
         fontSize: 24,
         color: 'white',
         backgroundColor: 'darkblue',

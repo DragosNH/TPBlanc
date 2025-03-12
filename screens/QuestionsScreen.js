@@ -4,13 +4,6 @@ import { StyleSheet } from "react-native";
 import RadioGroup from 'react-native-radio-buttons-group';
 
 
-const Question = props => {
-    return(
-        <View>
-            <Text>{props.name}</Text>
-        </View>
-    )
-}
 
 export default QuestionSrceen = ({ navigation }) => {
 
@@ -44,7 +37,7 @@ export default QuestionSrceen = ({ navigation }) => {
             <View style={styles.topScreen}>
                 <Text style={styles.title}>Quizz</Text>
                 <View style={styles.scoreRow}>
-                    <Text>Question: <Question name={1} /></Text>
+                    <Text>Question</Text>
                     <Text>Score: /8</Text>
                 </View>
             </View>
