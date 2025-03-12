@@ -1,6 +1,20 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import { StyleSheet } from "react-native";
+import { connectToDatabase, createTables } from "../components/db";
+
+const localData = useCallback(async() => {
+    try{
+        const db = await connectToDatabase();
+        createTables(db);
+    } catch (e) {
+        console.error(e);
+    }
+}, []);
+
+useEffect(() => {
+    loadData()
+}, [loadData])
 
 export default HomeScreen = ({ navigation }) => {
     const [name, onChangeName] = useState('');

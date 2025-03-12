@@ -3,6 +3,15 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import RadioGroup from 'react-native-radio-buttons-group';
 
+
+const Question = props => {
+    return(
+        <View>
+            <Text>{props.name}</Text>
+        </View>
+    )
+}
+
 export default QuestionSrceen = ({ navigation }) => {
 
     const radioButtons = useMemo(() => ([
@@ -35,8 +44,8 @@ export default QuestionSrceen = ({ navigation }) => {
             <View style={styles.topScreen}>
                 <Text style={styles.title}>Quizz</Text>
                 <View style={styles.scoreRow}>
-                    <Text>Question </Text>
-                    <Text>Score</Text>
+                    <Text>Question: <Question name={1} /></Text>
+                    <Text>Score: /8</Text>
                 </View>
             </View>
             <View style={styles.radioContainer}>
@@ -50,7 +59,7 @@ export default QuestionSrceen = ({ navigation }) => {
 
             </View>
             <TouchableOpacity style={styles.btn}
-                onPress={() => navigation.navigate('Question')}
+                onPress={() => navigation.navigate('Score')}
             >
                 <Text style={styles.txtBtn}>
                     Valider
