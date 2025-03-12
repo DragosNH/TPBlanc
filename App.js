@@ -5,6 +5,7 @@ import QuestionsScreen from './screens/QuestionsScreen';
 import ScoreScreen from './screens/ScoreScreen';
 import { useEffect, useState } from 'react';
 import { ScoreDatabase } from './components/db';
+import LeaderboardScreen from './screens/LeaderBoardScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ export default function App() {
         <Stack.Screen
           name="Score"
           component={ScoreScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Leaderboard"
+          component={LeaderboardScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
